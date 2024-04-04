@@ -1,0 +1,9 @@
+Education: Indicators related to school enrollment, literacy rates, years in school, and education spending.
+Economy: Indicators related to GDP, poverty levels, trade balance, economic growth, and financial markets.
+Population: Indicators related to total population, population growth, age distribution, and urbanization.
+Health: Indicators related to mortality rates, disease prevalence, healthcare spending, and vaccination rates.
+Energy: Indicators related to energy consumption, production, and renewable energy sources.
+Infrastructure: Indicators related to internet and mobile phone access, sanitation facilities, and transportation infrastructure.
+Environment: Indicators related to CO2 emissions, forest coverage, and environmental conditions like water withdrawal.
+Work: Indicators related to employment rates, labor force participation, and job sector distributions.
+Society: Indicators related to social issues, such as marriage age, inequality measures, and social security.
