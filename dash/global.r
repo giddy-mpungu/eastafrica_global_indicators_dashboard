@@ -1,2 +1,0 @@
-library(shidashi)
-library(shiny)

@@ -41,3 +41,5 @@ ea_dt2 = ea_dt2 %>%
   )) %>% 
   select(-`File Name`)
 
+ea_dt2$Year %>% table() %>% view()
+

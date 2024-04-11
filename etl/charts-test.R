@@ -1,31 +1,62 @@
-# Library
-library(dygraphs)
-library(xts)          # To make the convertion data-frame / xts format
-library(tidyverse)
-library(lubridate)
+library(highcharter)
 
-# Read the data (hosted on the gallery website)
-path = 'https://raw.githubusercontent.com/holtzy/R-graph-gallery/master/DATA/bike.csv'
-path = 'DATA/bike.csv'
-data <- read.table(path, header=T, sep=",") %>% head(300)
+current_year <- lubridate::year(lubridate::now())
+ 
+ ea_dt2 <- ea_dt2 %>% 
+   filter(Year >= 1990 & Year <= current_year) %>% 
+   mutate(Date = as.Date(paste0(Year, "-12-30")))
 
-# Check type of variable
-# str(data)
-
-# Since my time is currently a factor, I have to convert it to a date-time format!
-data$datetime <- ymd_hms(data$datetime)
-
-# Then you can create the xts necessary to use dygraph
-don <- xts(x = data$count, order.by = data$datetime)
-
-# Finally the plot
-p <- dygraph(don) %>%
-  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors="#D8AE5A") %>%
-  dyRangeSelector() %>%
-  dyCrosshair(direction = "vertical") %>%
-  dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2, hideOnMouseOut = FALSE)  %>%
-  dyRoller(rollPeriod = 1)
-
-# save the widget
-# library(htmlwidgets)
-# saveWidget(p, file=paste0( getwd(), "/HtmlWidget/dygraphs318.html"))
+indicator_selected = "adults_with_hiv_percent_age_15_49"
+indicator_name = ea_dt2$name[ea_dt2$`Indicator Name` == indicator_selected][1]
+indicator_short_name = ea_dt2$name_short[ea_dt2$`Indicator Name` == indicator_selected][1]
+indicator_source = ea_dt2$source_url[ea_dt2$`Indicator Name` == indicator_selected][1]
+indicator_description = ea_dt2$description[ea_dt2$`Indicator Name` == indicator_selected][1]
+indicator_category = ea_dt2$category[ea_dt2$`Indicator Name` == indicator_selected][1]
+ 
+ea_dt2 %>% 
+  filter(`Indicator Name` == indicator_selected) %>%
+  group_by(country, Date) %>% 
+  summarise(value = mean(`Indicator Value`,na.rm = TRUE),.groups = 'drop') %>%
+  hchart(
+    type =  "line",
+    mapping = hcaes(x = Date, y = value, group = country)
+) %>% 
+  hc_xAxis(title = list(text = "Year")) %>%
+  hc_yAxis(title = list(text = indicator_name)) %>%
+  hc_title(
+    text = paste0(indicator_name, " Overtime"),
+    style = list(fontWeight = "bold", fontSize = "12px"),
+    align = "center"
+  ) %>%
+  hc_tooltip(
+    crosshairs = TRUE,
+    borderWidth = 0,
+    sort = TRUE,
+    table = TRUE
+  ) %>% 
+  hc_exporting(
+    enabled = TRUE,
+    chartOptions = list(
+      chart = list(
+        backgroundColor = "transparent"
+      )
+    )
+  ) %>% 
+  hc_rangeSelector(
+    enabled = TRUE,
+    selected = 0,
+    inputDateFormat = '%Y',
+    buttons = list(
+      list(type = 'all', text = '1 yr'),
+      list(type = 'year', count = 5, text = '5 yrs'),
+      list(type = 'year', count = 10, text = '10 yrs')
+    )
+  ) %>% 
+  hc_navigator(
+    enabled = TRUE,
+    outlineColor = "gray",
+    handles = list(
+      backgroundColor = "yellow",
+      borderColor = "red"
+    )
+  )
