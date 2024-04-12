@@ -1,6 +1,8 @@
 dynamic_routes <- list(
-  route(path = "/economy", ui = economy_ui),
-  route(path = "/faqs", ui = faqs_ui)
+  route(path = "economy", ui = economy_ui),
+  route(path = "environment", ui = environment_ui),
+  route(path = "health", ui = health_ui),
+  route(path = "faqs", ui = faqs_ui)
 )
 
 router_ui(

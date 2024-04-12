@@ -1,6 +1,6 @@
 
 function(input, output, session) {
-  router_server()
+  router_server(root_page = "/")
   observe({
   
     #---------------------------------------------------------------------------
