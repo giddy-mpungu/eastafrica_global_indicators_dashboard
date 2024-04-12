@@ -14,6 +14,7 @@ library(stringr)
 library(sf)
 library(leafem)
 library(leaflet)
+library(shinyjs)
 
 #-------------------------------------------------------------------------------
 # Function to create content page using the styled template
@@ -23,11 +24,8 @@ page <- function(ui_object_path, page_title = "Uganda's Global Indictors Profile
       lang = "en",
       tags$head(
         tags$meta(
-          charset = "utf-8"
-        ),
-        tags$meta(
           name = "viewport",
-          content = "width=device-width, initial-scale=1.0"
+          content = "width=device-width, initial-scale=1"
         ),
         tags$title(
           paste0("Uganda's Global Indictors-",page_title)
@@ -97,7 +95,7 @@ page <- function(ui_object_path, page_title = "Uganda's Global Indictors Profile
                 tags$ul(
                   class = "sidebar-menu",
                   tags$li(
-                    class = "active current-page",
+                    # class = "active current-page",
                     tags$a(
                       href = "/",
                       tags$i(
@@ -345,6 +343,7 @@ page <- function(ui_object_path, page_title = "Uganda's Global Indictors Profile
                       )
                     )
                   ),
+                  
                   tags$div(
                     class = "d-flex",
                     tags$button(

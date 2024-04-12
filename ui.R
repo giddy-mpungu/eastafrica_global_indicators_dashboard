@@ -7,6 +7,6 @@ dynamic_routes <- list(
 
 router_ui(
   default = route(path = "/",ui = about_ui),
-  page_404 = page404(page = page404_ui),
+  page_404 = page404(page404_ui),
   !!!dynamic_routes
 )
